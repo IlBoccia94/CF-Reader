@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="Demo client-side per leggere un codice fiscale italiano da una foto tramite OCR.">
+  <title>CF Reader</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="badge">DEMO · OCR LOCALE</div>
+      <h1>CF Reader</h1>
+      <p class="lead">Fotografa una tessera sanitaria o un documento che contiene un codice fiscale. La demo prova a leggerlo e a verificarne la validità.</p>
+    </section>
+
+    <section class="card">
+      <div class="actions">
+        <label class="button button-primary" for="cameraInput">
+          <span class="button-icon">📷</span>
+          Scatta una foto
+        </label>
+        <input id="cameraInput" class="visually-hidden" type="file" accept="image/*" capture="environment">
+
+        <label class="button button-secondary" for="fileInput">
+          <span class="button-icon">🖼️</span>
+          Carica immagine
+        </label>
+        <input id="fileInput" class="visually-hidden" type="file" accept="image/*">
+      </div>
+
+      <p class="hint">Per risultati migliori: documento ben illuminato, testo a fuoco e codice fiscale il più orizzontale possibile.</p>
+
+      <div id="previewWrap" class="preview-wrap" hidden>
+        <img id="preview" alt="Anteprima del documento selezionato">
+      </div>
+
+      <div id="status" class="status" aria-live="polite" hidden>
+        <div class="status-row">
+          <span id="statusLabel">Preparazione OCR…</span>
+          <strong id="statusPercent">0%</strong>
+        </div>
+        <div class="progress" aria-hidden="true">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+      </div>
+
+      <section id="result" class="result" aria-live="polite" hidden>
+        <p class="result-kicker">Codice fiscale rilevato</p>
+        <div class="result-code-row">
+          <code id="cfValue"></code>
+          <button id="copyButton" class="copy-button" type="button">Copia</button>
+        </div>
+        <p id="validationMessage" class="validation-message"></p>
+      </section>
+
+      <section id="errorBox" class="error-box" aria-live="polite" hidden>
+        <strong>Nessun codice fiscale valido trovato.</strong>
+        <p>Prova a rifare la foto più vicino, con più luce e senza riflessi.</p>
+      </section>
+
+      <details id="debugPanel" class="debug-panel" hidden>
+        <summary>Mostra testo OCR</summary>
+        <pre id="ocrText"></pre>
+      </details>
+    </section>
+
+    <section class="privacy-note">
+      <span aria-hidden="true">🔒</span>
+      <p><strong>Privacy by design:</strong> la foto viene elaborata sul dispositivo dal browser e non viene salvata da questa demo. Tesseract.js e i dati OCR vengono caricati da CDN.</p>
+    </section>
+
+    <footer>
+      Demo tecnica · Non sostituisce una verifica anagrafica ufficiale.
+    </footer>
+  </main>
+</body>
+</html>
